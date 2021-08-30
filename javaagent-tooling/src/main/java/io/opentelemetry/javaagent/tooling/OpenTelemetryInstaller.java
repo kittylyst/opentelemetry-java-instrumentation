@@ -10,16 +10,11 @@ import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.extension.noopapi.NoopOpenTelemetry;
 import io.opentelemetry.instrumentation.api.config.Config;
 import io.opentelemetry.javaagent.extension.AgentListener;
-import io.opentelemetry.javaagent.instrumentation.api.OpenTelemetrySdkAccess;
-import io.opentelemetry.sdk.OpenTelemetrySdk;
-import io.opentelemetry.sdk.autoconfigure.OpenTelemetrySdkAutoConfiguration;
 import io.opentelemetry.sdk.autoconfigure.spi.SdkMeterProviderConfigurer;
-import io.opentelemetry.sdk.common.CompletableResultCode;
 import io.opentelemetry.sdk.metrics.SdkMeterProviderBuilder;
 import io.opentelemetry.sdk.metrics.aggregator.AggregatorFactory;
 import io.opentelemetry.sdk.metrics.common.InstrumentType;
 import io.opentelemetry.sdk.metrics.data.AggregationTemporality;
-import io.opentelemetry.sdk.metrics.export.IntervalMetricReader;
 import io.opentelemetry.sdk.metrics.view.InstrumentSelector;
 import io.opentelemetry.sdk.metrics.view.View;
 import java.util.Arrays;
@@ -55,14 +50,16 @@ public class OpenTelemetryInstaller implements AgentListener {
       } else {
         System.setProperty("io.opentelemetry.context.contextStorageProvider", "default");
 
-        OpenTelemetrySdk sdk = OpenTelemetrySdkAutoConfiguration.initialize();
-        OpenTelemetrySdkAccess.internalSetForceFlush(
-            (timeout, unit) -> {
-              CompletableResultCode traceResult = sdk.getSdkTracerProvider().forceFlush();
-              CompletableResultCode flushResult = IntervalMetricReader.forceFlushGlobal();
-              CompletableResultCode.ofAll(Arrays.asList(traceResult, flushResult))
-                  .join(timeout, unit);
-            });
+        // FIXME
+
+//        OpenTelemetrySdk sdk = OpenTelemetrySdkAutoConfiguration.initialize();
+//        OpenTelemetrySdkAccess.internalSetForceFlush(
+//            (timeout, unit) -> {
+//              CompletableResultCode traceResult = sdk.getSdkTracerProvider().forceFlush();
+//              CompletableResultCode flushResult = IntervalMetricReader.forceFlushGlobal();
+//              CompletableResultCode.ofAll(Arrays.asList(traceResult, flushResult))
+//                  .join(timeout, unit);
+//            });
       }
 
     } else {

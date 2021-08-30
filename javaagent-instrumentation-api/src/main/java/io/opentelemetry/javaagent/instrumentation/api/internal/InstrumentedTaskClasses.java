@@ -5,14 +5,11 @@
 
 package io.opentelemetry.javaagent.instrumentation.api.internal;
 
-import io.opentelemetry.instrumentation.api.config.Config;
 import io.opentelemetry.javaagent.instrumentation.api.util.Trie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class InstrumentedTaskClasses {
 
-  private static final Logger logger = LoggerFactory.getLogger(Config.class);
+//  private static final Logger logger = LoggerFactory.getLogger(Config.class);
 
   private static final String AGENT_CLASSLOADER_NAME =
       "io.opentelemetry.javaagent.bootstrap.AgentClassLoader";
@@ -46,7 +43,7 @@ public final class InstrumentedTaskClasses {
    */
   public static void setIgnoredTaskClasses(Trie<Boolean> ignoredTasksTrie) {
     if (InstrumentedTaskClasses.ignoredTaskClasses != null) {
-      logger.warn("Ignored task classes were already set earlier; returning.");
+//      logger.warn("Ignored task classes were already set earlier; returning.");
       return;
     }
     InstrumentedTaskClasses.ignoredTaskClasses = ignoredTasksTrie;
