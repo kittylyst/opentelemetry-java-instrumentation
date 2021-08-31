@@ -20,11 +20,11 @@ import io.opentelemetry.sdk.metrics.view.View;
 import java.util.Arrays;
 import java.util.Map;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.LoggerFactory;
 
 @AutoService(AgentListener.class)
 public class OpenTelemetryInstaller implements AgentListener {
-  private static final Logger logger = LoggerFactory.getLogger(OpenTelemetryInstaller.class);
+  private static Logger logger; // = LoggerFactory.getLogger(OpenTelemetryInstaller.class);
 
   static final String JAVAAGENT_ENABLED_CONFIG = "otel.javaagent.enabled";
   static final String JAVAAGENT_NOOP_CONFIG = "otel.javaagent.experimental.use-noop-api";

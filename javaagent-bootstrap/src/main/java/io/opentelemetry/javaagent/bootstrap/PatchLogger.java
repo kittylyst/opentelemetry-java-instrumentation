@@ -11,7 +11,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
 /**
  * Dependencies of the agent sometimes call java.util.logging.Logger.getLogger(). This can have the
@@ -27,7 +27,316 @@ public class PatchLogger {
 
   public static final PatchLogger global = new PatchLogger(GLOBAL_LOGGER_NAME);
 
-  private final Logger slf4jLogger;
+  @SuppressWarnings("UngroupedOverloads")
+  public static class MyNOPLogger implements Logger {
+
+    @Override
+    public String getName() {
+      return "NOP";
+    }
+
+    @Override
+    public boolean isTraceEnabled() {
+      return false;
+    }
+
+    @Override
+    public void trace(String msg) {
+
+    }
+
+    @Override
+    public void trace(String format, Object arg) {
+
+    }
+
+    @Override
+    public void trace(String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void trace(String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void trace(String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isTraceEnabled(Marker marker) {
+      return false;
+    }
+
+    @Override
+    public void trace(Marker marker, String msg) {
+
+    }
+
+    @Override
+    public void trace(Marker marker, String format, Object arg) {
+
+    }
+
+    @Override
+    public void trace(Marker marker, String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void trace(Marker marker, String format, Object... argArray) {
+
+    }
+
+    @Override
+    public void trace(Marker marker, String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+      return false;
+    }
+
+    @Override
+    public void debug(String msg) {
+
+    }
+
+    @Override
+    public void debug(String format, Object arg) {
+
+    }
+
+    @Override
+    public void debug(String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void debug(String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void debug(String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isDebugEnabled(Marker marker) {
+      return false;
+    }
+
+    @Override
+    public void debug(Marker marker, String msg) {
+
+    }
+
+    @Override
+    public void debug(Marker marker, String format, Object arg) {
+
+    }
+
+    @Override
+    public void debug(Marker marker, String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void debug(Marker marker, String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void debug(Marker marker, String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isInfoEnabled() {
+      return false;
+    }
+
+    @Override
+    public void info(String msg) {
+
+    }
+
+    @Override
+    public void info(String format, Object arg) {
+
+    }
+
+    @Override
+    public void info(String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void info(String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void info(String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isInfoEnabled(Marker marker) {
+      return false;
+    }
+
+    @Override
+    public void info(Marker marker, String msg) {
+
+    }
+
+    @Override
+    public void info(Marker marker, String format, Object arg) {
+
+    }
+
+    @Override
+    public void info(Marker marker, String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void info(Marker marker, String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void info(Marker marker, String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+      return false;
+    }
+
+    @Override
+    public void warn(String msg) {
+
+    }
+
+    @Override
+    public void warn(String format, Object arg) {
+
+    }
+
+    @Override
+    public void warn(String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void warn(String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void warn(String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isWarnEnabled(Marker marker) {
+      return false;
+    }
+
+    @Override
+    public void warn(Marker marker, String msg) {
+
+    }
+
+    @Override
+    public void warn(Marker marker, String format, Object arg) {
+
+    }
+
+    @Override
+    public void warn(Marker marker, String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void warn(Marker marker, String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void warn(Marker marker, String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isErrorEnabled() {
+      return false;
+    }
+
+    @Override
+    public void error(String msg) {
+
+    }
+
+    @Override
+    public void error(String format, Object arg) {
+
+    }
+
+    @Override
+    public void error(String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void error(String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void error(String msg, Throwable t) {
+
+    }
+
+    @Override
+    public boolean isErrorEnabled(Marker marker) {
+      return false;
+    }
+
+    @Override
+    public void error(Marker marker, String msg) {
+
+    }
+
+    @Override
+    public void error(Marker marker, String format, Object arg) {
+
+    }
+
+    @Override
+    public void error(Marker marker, String format, Object arg1, Object arg2) {
+
+    }
+
+    @Override
+    public void error(Marker marker, String format, Object... arguments) {
+
+    }
+
+    @Override
+    public void error(Marker marker, String msg, Throwable t) {
+
+    }
+  }
+
+  private final Logger slf4jLogger = new MyNOPLogger();
 
   private ResourceBundle resourceBundle;
 
@@ -40,13 +349,13 @@ public class PatchLogger {
   }
 
   private PatchLogger(String name) {
-    this(LoggerFactory.getLogger(name));
+//    this(LoggerFactory.getLogger(name));
   }
 
   // visible for testing
-  PatchLogger(Logger slf4jLogger) {
-    this.slf4jLogger = slf4jLogger;
-  }
+//  PatchLogger(Logger slf4jLogger) {
+//    this.slf4jLogger = slf4jLogger;
+//  }
 
   // visible for testing
   Logger getSlf4jLogger() {
