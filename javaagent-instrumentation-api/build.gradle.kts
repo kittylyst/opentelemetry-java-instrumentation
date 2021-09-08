@@ -8,6 +8,7 @@ group = "io.opentelemetry.javaagent"
 
 dependencies {
   api(project(":instrumentation-api"))
+  api(project(":javaagent-bootstrap"))
 
   implementation("org.slf4j:slf4j-api")
 

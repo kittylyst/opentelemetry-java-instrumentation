@@ -11,10 +11,9 @@ import io.opentelemetry.javaagent.instrumentation.api.util.Trie;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.matcher.ElementMatcher;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class IgnoredClassLoadersMatcher extends ElementMatcher.Junction.AbstractBase<ClassLoader> {
-  private static final Logger logger = LoggerFactory.getLogger(IgnoredClassLoadersMatcher.class);
+  private static final Logger logger = PatchLogger.of(IgnoredClassLoadersMatcher.class.getName());
 
   /* Cache of classloader-instance -> (true|false). True = skip instrumentation. False = safe to instrument. */
   private static final Cache<ClassLoader, Boolean> skipCache =
@@ -70,6 +69,7 @@ public class IgnoredClassLoadersMatcher extends ElementMatcher.Junction.Abstract
    */
   private static boolean delegatesToBootstrap(ClassLoader loader) {
     boolean delegates = true;
+    // FIXME Is the interface type correct here?
     if (!loadsExpectedClass(loader, PatchLogger.class)) {
       logger.debug("loader {} failed to delegate bootstrap agent class", loader);
       delegates = false;

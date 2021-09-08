@@ -9,6 +9,7 @@ import com.google.auto.service.AutoService;
 import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.extension.noopapi.NoopOpenTelemetry;
 import io.opentelemetry.instrumentation.api.config.Config;
+import io.opentelemetry.javaagent.bootstrap.PatchLogger;
 import io.opentelemetry.javaagent.extension.AgentListener;
 import io.opentelemetry.javaagent.instrumentation.api.OpenTelemetrySdkAccess;
 import io.opentelemetry.javaagent.tooling.config.ConfigPropertiesAdapter;
@@ -25,11 +26,10 @@ import io.opentelemetry.sdk.metrics.view.InstrumentSelector;
 import io.opentelemetry.sdk.metrics.view.View;
 import java.util.Arrays;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @AutoService(AgentListener.class)
 public class OpenTelemetryInstaller implements AgentListener {
-  private static final Logger logger = LoggerFactory.getLogger(OpenTelemetryInstaller.class);
+  private static final Logger logger = PatchLogger.of(OpenTelemetryInstaller.class.getName());
 
   static final String JAVAAGENT_ENABLED_CONFIG = "otel.javaagent.enabled";
   static final String JAVAAGENT_NOOP_CONFIG = "otel.javaagent.experimental.use-noop-api";

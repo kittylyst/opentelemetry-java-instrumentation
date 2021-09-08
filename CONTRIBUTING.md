@@ -27,7 +27,7 @@ java -version
 ```
 
 ```bash
-./gradlew assemble
+`./gradlew assemble`
 ```
 
 and then you can find the java agent artifact at

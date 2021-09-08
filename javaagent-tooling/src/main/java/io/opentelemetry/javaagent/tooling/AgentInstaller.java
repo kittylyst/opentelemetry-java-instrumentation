@@ -13,6 +13,7 @@ import static net.bytebuddy.matcher.ElementMatchers.any;
 
 import io.opentelemetry.instrumentation.api.config.Config;
 import io.opentelemetry.javaagent.bootstrap.AgentClassLoader;
+import io.opentelemetry.javaagent.bootstrap.PatchLogger;
 import io.opentelemetry.javaagent.extension.AgentExtension;
 import io.opentelemetry.javaagent.extension.AgentListener;
 import io.opentelemetry.javaagent.extension.bootstrap.BootstrapPackagesConfigurer;
@@ -46,7 +47,6 @@ import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.utility.JavaModule;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AgentInstaller {
 
@@ -65,7 +65,7 @@ public class AgentInstaller {
 
   static {
     LoggingConfigurer.configureLogger();
-    logger = LoggerFactory.getLogger(AgentInstaller.class);
+    logger = PatchLogger.of(AgentInstaller.class.getName());
 
     addByteBuddyRawSetting();
     // this needs to be done as early as possible - before the first Config.get() call
@@ -248,7 +248,7 @@ public class AgentInstaller {
 
   static class RedefinitionLoggingListener implements AgentBuilder.RedefinitionStrategy.Listener {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedefinitionLoggingListener.class);
+    private static final Logger logger = PatchLogger.of(RedefinitionLoggingListener.class.getName());
 
     @Override
     public void onBatch(int index, List<Class<?>> batch, List<Class<?>> types) {}

@@ -5,14 +5,13 @@
 
 package io.opentelemetry.javaagent.instrumentation.api.internal;
 
-import io.opentelemetry.instrumentation.api.config.Config;
+import io.opentelemetry.javaagent.bootstrap.PatchLogger;
 import io.opentelemetry.javaagent.instrumentation.api.util.Trie;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class InstrumentedTaskClasses {
 
-  private static final Logger logger = LoggerFactory.getLogger(Config.class);
+  private static final Logger logger = PatchLogger.of(InstrumentedTaskClasses.class.getName());
 
   private static final String AGENT_CLASSLOADER_NAME =
       "io.opentelemetry.javaagent.bootstrap.AgentClassLoader";

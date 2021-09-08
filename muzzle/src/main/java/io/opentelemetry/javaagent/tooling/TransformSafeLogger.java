@@ -7,9 +7,9 @@ package io.opentelemetry.javaagent.tooling;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import io.opentelemetry.javaagent.bootstrap.PatchLogger;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 /**
@@ -42,7 +42,7 @@ public final class TransformSafeLogger {
   private final Logger logger;
 
   public static TransformSafeLogger getLogger(Class<?> clazz) {
-    return new TransformSafeLogger(LoggerFactory.getLogger(clazz));
+    return new TransformSafeLogger(PatchLogger.of(clazz.getName()));
   }
 
   private TransformSafeLogger(Logger logger) {

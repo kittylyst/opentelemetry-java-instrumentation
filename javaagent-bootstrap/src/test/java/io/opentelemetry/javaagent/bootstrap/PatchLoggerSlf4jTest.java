@@ -22,11 +22,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-class PatchLoggerTest {
+class PatchLoggerSlf4jTest {
   @Test
   void testImplementsAllMethods() {
     Set<MethodSignature> patchLoggerMethods = new HashSet<>();
-    for (Method method : PatchLogger.class.getMethods()) {
+    for (Method method : PatchLoggerSlf4j.class.getMethods()) {
       MethodSignature methodSignature = new MethodSignature();
       methodSignature.name = method.getName();
       for (Class<?> clazz : method.getParameterTypes()) {
@@ -68,7 +68,7 @@ class PatchLoggerTest {
 
   @Test
   void testGetLogger() {
-    PatchLogger logger = PatchLogger.getLogger("abc");
+    PatchLoggerSlf4j logger = PatchLoggerSlf4j.getLogger("abc");
     assertThat(logger.getSlf4jLogger().getName()).isEqualTo("abc");
   }
 
@@ -78,7 +78,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     when(slf4jLogger.getName()).thenReturn("xyz");
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getName()).isEqualTo("xyz");
   }
@@ -87,7 +87,7 @@ class PatchLoggerTest {
   void testNormalMethods() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.severe("ereves");
@@ -114,7 +114,7 @@ class PatchLoggerTest {
   void testParameterizedLevelMethodsWithNoParams() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.log(Level.SEVERE, "ereves");
@@ -146,7 +146,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.log(Level.SEVERE, "ereves: {0}", "a");
@@ -185,7 +185,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.log(Level.SEVERE, "ereves: {0},{1}", new Object[] {"a", "b"});
@@ -219,7 +219,7 @@ class PatchLoggerTest {
   void testParameterizedLevelMethodsWithThrowable() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     Throwable a = new Throwable();
     Throwable b = new Throwable();
     Throwable c = new Throwable();
@@ -260,7 +260,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
 
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // then
     assertThat(logger.isLoggable(Level.SEVERE)).isTrue();
@@ -283,7 +283,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
 
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // then
     assertThat(logger.isLoggable(Level.SEVERE)).isTrue();
@@ -306,7 +306,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isErrorEnabled()).thenReturn(false);
 
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // then
     assertThat(logger.isLoggable(Level.SEVERE)).isFalse();
@@ -324,7 +324,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getLevel()).isEqualTo(Level.SEVERE);
   }
@@ -335,7 +335,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getLevel()).isEqualTo(Level.WARNING);
   }
@@ -346,7 +346,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getLevel()).isEqualTo(Level.CONFIG);
   }
@@ -357,7 +357,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     when(slf4jLogger.isDebugEnabled()).thenReturn(true);
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getLevel()).isEqualTo(Level.FINE);
   }
@@ -368,7 +368,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     when(slf4jLogger.isTraceEnabled()).thenReturn(true);
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getLevel()).isEqualTo(Level.FINEST);
   }
@@ -378,7 +378,7 @@ class PatchLoggerTest {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     // then
     assertThat(logger.getLevel()).isEqualTo(Level.OFF);
   }
@@ -387,7 +387,7 @@ class PatchLoggerTest {
   void testLogpParameterizedLevelMethodsWithNoParams() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logp(Level.SEVERE, null, null, "ereves");
@@ -419,7 +419,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logp(Level.SEVERE, null, null, "ereves: {0}", "a");
@@ -458,7 +458,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logp(Level.SEVERE, null, null, "ereves: {0},{1}", new Object[] {"a", "b"});
@@ -492,7 +492,7 @@ class PatchLoggerTest {
   void testLogpParameterizedLevelMethodsWithThrowable() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     Throwable a = new Throwable();
     Throwable b = new Throwable();
     Throwable c = new Throwable();
@@ -526,7 +526,7 @@ class PatchLoggerTest {
   void testLogrbParameterizedLevelMethodsWithNoParams() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logrb(Level.SEVERE, null, null, null, "ereves");
@@ -558,7 +558,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logrb(Level.SEVERE, null, null, null, "ereves: {0}", "a");
@@ -597,7 +597,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logrb(
@@ -640,7 +640,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logrb(Level.SEVERE, (String) null, null, null, "ereves: {0},{1}", "a", "b");
@@ -679,7 +679,7 @@ class PatchLoggerTest {
     when(slf4jLogger.isInfoEnabled()).thenReturn(true);
     when(slf4jLogger.isWarnEnabled()).thenReturn(true);
     when(slf4jLogger.isErrorEnabled()).thenReturn(true);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.logrb(Level.SEVERE, (ResourceBundle) null, "ereves: {0},{1}", "a", "b");
@@ -713,7 +713,7 @@ class PatchLoggerTest {
   void testLogrbParameterizedLevelMethodsWithThrowable() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     Throwable a = new Throwable();
     Throwable b = new Throwable();
     Throwable c = new Throwable();
@@ -747,7 +747,7 @@ class PatchLoggerTest {
   void testLogrbParameterizedLevelMethodsWithThrowable2() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     Throwable a = new Throwable();
     Throwable b = new Throwable();
     Throwable c = new Throwable();
@@ -781,7 +781,7 @@ class PatchLoggerTest {
   void testLogrbParameterizedLevelMethodsWithResourceBundleObjectAndThrowable() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
     Throwable a = new Throwable();
     Throwable b = new Throwable();
     Throwable c = new Throwable();
@@ -815,7 +815,7 @@ class PatchLoggerTest {
   void testEnteringExitingThrowingMethods() {
     // given
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // when
     logger.entering(null, null);
@@ -835,7 +835,7 @@ class PatchLoggerTest {
     org.slf4j.Logger slf4jLogger = mock(org.slf4j.Logger.class);
 
     // when
-    PatchLogger logger = new PatchLogger(slf4jLogger);
+    PatchLoggerSlf4j logger = new PatchLoggerSlf4j(slf4jLogger);
 
     // then
     assertThat(logger.getResourceBundle()).isNull();

@@ -9,6 +9,7 @@ import com.google.auto.service.AutoService;
 import io.opentelemetry.api.metrics.GlobalMeterProvider;
 import io.opentelemetry.exporter.logging.LoggingSpanExporter;
 import io.opentelemetry.instrumentation.api.config.Config;
+import io.opentelemetry.javaagent.bootstrap.PatchLogger;
 import io.opentelemetry.javaagent.spi.exporter.MetricExporterFactory;
 import io.opentelemetry.javaagent.spi.exporter.SpanExporterFactory;
 import io.opentelemetry.sdk.autoconfigure.spi.SdkTracerProviderConfigurer;
@@ -27,11 +28,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @AutoService(SdkTracerProviderConfigurer.class)
 public class AgentTracerProviderConfigurer implements SdkTracerProviderConfigurer {
-  private static final Logger logger = LoggerFactory.getLogger(AgentTracerProviderConfigurer.class);
+  private static final Logger logger = PatchLogger.of(AgentTracerProviderConfigurer.class.getName());
 
   static final String EXPORTER_JAR_CONFIG = "otel.javaagent.experimental.exporter.jar";
 
